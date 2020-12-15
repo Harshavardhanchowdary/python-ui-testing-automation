@@ -118,28 +118,31 @@ class Locator:
                     wait_state, by_locator, timeout)
 
         except StaleElementReferenceException as stale_ex:
-            self.context.logger.error(
-                f'The element {str(by_locator)} is no longer attached to the DOM '
-                f'i.e. it has been removed from the document or the document has changed')
-            self.context.logger.exception(stale_ex)
             if throw_exception:
+                self.context.logger.error(
+                    f'The element {str(by_locator)} is no longer attached to the DOM '
+                    f'i.e. it has been removed from the document or the document has changed')
+
+                self.context.logger.exception(stale_ex)
                 raise StaleElementReferenceException(
                     f'The element {str(by_locator)} is no longer attached to the DOM '
                     f'i.e. it has been removed from the document or the document has changed.'
                     f' Error {stale_ex}')
 
         except TimeoutException as timeout_ex:
-            self.context.logger.error(f'Timed out after {str(timeout)} seconds waiting for the '
-                                      f'element {str(by_locator)} state {str(wait_state)}. Error {timeout_ex}')
-            self.context.logger.exception(timeout_ex)
             if throw_exception:
+                self.context.logger.error(f'Timed out after {str(timeout)} seconds waiting for the '
+                                          f'element {str(by_locator)} state {str(wait_state)}.')
+
+                self.context.logger.exception(timeout_ex)
                 raise TimeoutException(f'Timed out after {str(timeout)} seconds waiting for the '
                                        f'element {str(by_locator)} state {str(wait_state)}. Error {timeout_ex}')
         except WebDriverException as ex:
-            self.context.logger.error(f'An error occurred while identifying the element '
-                                      f'{str(by_locator)} on the web page. Error {ex}')
-            self.context.logger.exception(ex)
             if throw_exception:
+                self.context.logger.error(f'An error occurred while identifying the element '
+                                          f'{str(by_locator)} on the web page.')
+
+                self.context.logger.exception(ex)
                 raise WebDriverException(f'An error occurred while identifying the element '
                                          f'{str(by_locator)} on the web page. Error {ex}')
         return web_element
@@ -306,7 +309,6 @@ class Locator:
         return self._get_web_element(_ElementType.MULTIPLE,
                                      locator, wait_state,
                                      throw_exception, timeout)
-
 
         # TODO: get_elements_from_parent_element,
         #  TODO: get_element_from_parent_element

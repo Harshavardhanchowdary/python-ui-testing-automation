@@ -102,8 +102,7 @@ class SelectAction:
 
         :param locator: Web element or a locator string on which the action need to be performed.
         :param select_by: Method to select a dropdown value. Should be a instance of SelectMethod enum class
-        :param is_select: is a boolean value True: To select , False: to deselect
-        in case of multiselect dropdown.
+        :param is_select: is a boolean value True: To select , False: to deselect in case of multiselect dropdown.
         :param values: A list of single or multiple indices, values or visible texts
         :param wait_state: he wait state for retrial. Choose state from ElementWaitState class.
         :param timeout: wait time before throwing any exception. If None, timeout defaults to 20 seconds.

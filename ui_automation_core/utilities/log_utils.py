@@ -15,7 +15,6 @@ class LogUtils:
         return f'An instance of LogUtils is created and ' \
                f'`{self.log_dir.split("/")[-2:-1:][0]}` folder is created.'
 
-
     def create_log_directory(self):
         """
         Creates a logging directory based on the folder name or Path provided during class instantiation,

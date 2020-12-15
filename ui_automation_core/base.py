@@ -4,12 +4,14 @@
 # Desc   : Base class holds all the methods to interact with web applications
 from ui_automation_core.helpers.actions.action import Actions
 from ui_automation_core.helpers.actions.mouse_action import ClickMethod, MouseAction
+from ui_automation_core.helpers.browser.alert_action_type import AlertActionType
 from ui_automation_core.helpers.browser.browser_cookie import BrowserCookie
 from ui_automation_core.helpers.browser.browser_navigation import BrowserINavigation
 from ui_automation_core.helpers.browser.browser_window import BrowserWindow
 from ui_automation_core.helpers.scroll.scroll import Scroll
 from ui_automation_core.helpers.select.select import SelectAction
 from ui_automation_core.helpers.select.select_method import SelectMethod
+from ui_automation_core.helpers.verification.verify import Verify
 from ui_automation_core.helpers.web_element.locator import Locator, ElementWaitState
 
 
@@ -318,6 +320,55 @@ class BasePage:
                 """
         return Actions(self.context).get_property(locator, name, wait_state, timeout)
 
+    def get_size(self, locator, wait_state=ElementWaitState.PRESENT, timeout=None):
+        """
+               The size of the element.
+               :param locator:  Web element or a locator string on which the action need to be performed.
+               :param wait_state: he wait state for retrial. Choose state from ElementWaitState class.
+               :param timeout: wait time before throwing any exception. If None, timeout defaults to 20 seconds.
+               :return: The size of the element.
+               """
+        return Actions(self.context).get_element_size(locator, wait_state, timeout)
+
+    def get_rectangle(self, locator, wait_state=ElementWaitState.PRESENT, timeout=None):
+        """
+                A dictionary with the size and location of the element.
+                :param locator:  Web element or a locator string on which the action need to be performed.
+                :param wait_state: he wait state for retrial. Choose state from ElementWaitState class.
+                :param timeout: wait time before throwing any exception. If None, timeout defaults to 20 seconds.
+                :return:  A dictionary with the size and location of the element.
+                """
+        return Actions(self.context).get_rectangle(locator, wait_state, timeout)
+
+    def get_location(self, locator, wait_state=ElementWaitState.PRESENT, timeout=None):
+        """
+                Gets the location of the element in the renderable canvas.
+                The size of the element.
+                :param locator:  Web element or a locator string on which the action need to be performed.
+                :param wait_state: he wait state for retrial. Choose state from ElementWaitState class.
+                :param timeout: wait time before throwing any exception. If None, timeout defaults to 20 seconds.
+                :return: The location of the element.
+                """
+        return Actions(self.context).get_location(locator, wait_state, timeout)
+
+    def take_screenshot(self, file_path=None, locator=None, wait_state=ElementWaitState.PRESENT,
+                        timeout=None):
+        """
+        Takes the screenshot of entire page or a given element.
+
+        :param file_path: Path+filename.png,  where the screenshot should be saved.
+                Default: None - To save screenshot to screenshots folder.
+
+        :param locator:  Web element or a locator string whose screenshot need to be taken.
+                Default: None - To take entire screenshot.
+
+        :param wait_state: he wait state for retrial. Choose state from ElementWaitState class.
+        :param timeout: wait time before throwing any exception. If None, timeout defaults to 20 seconds.
+        :return: Boolean True if successful. False if there is any IOError.
+        """
+
+        return Actions(self.context).take_screenshot(file_path, locator, wait_state, timeout)
+
     def click(self, locator=None, click_method=ClickMethod.API_CLICK,
               wait_state=ElementWaitState.PRESENT, timeout=None):
         """
@@ -554,3 +605,179 @@ class BasePage:
                 :return: self
                 """
         return SelectAction(self.context).deselect_all_options_dropdown(locator, wait_state, timeout)
+
+    def verify_element_not_present(self, locator, timeout=None):
+        """
+                Verify if the given web element does NOT present on the DOM.
+                :param locator: The string pattern to find the element.
+                :param timeout: wait time before throwing any exception.
+                            If None, timeout is set to default timeout.
+                :return: True if the given web element does NOT present on the DOM else False.
+                """
+        return Verify(self.context).is_element_not_present(locator, timeout)
+
+    def verify_alert_not_present(self, timeout=None):
+        """
+               Verify if alert does not present
+
+               :param timeout: wait time before throwing any exception.
+                           If None, timeout is set to default timeout.
+               :return: True if alert does not present else False.
+               """
+        return Verify(self.context).is_alert_not_present(timeout)
+
+    def verify_alert_present(self, timeout=None):
+        """
+               Verify if alert does present
+
+               :param timeout: wait time before throwing any exception.
+                           If None, timeout is set to default timeout.
+               :return: True if alert does present else False.
+               """
+        return Verify(self.context).is_alert_present(timeout)
+
+    def verify_element_attribute_value(self, locator, attribute, value):
+        """
+                Verify if the web element has an attribute with the specified name and value.
+
+                :param locator: web element or a locator string on which the action need to be performed.
+                :param attribute: attribute with the specified name
+                :param value: expected attribute value
+                :return: True if the web element has an attribute with the specified name and value, else False
+                """
+        return Verify(self.context).is_attribute_value(locator, attribute, value)
+
+    def verify_element_checked(self, locator, timeout=None):
+
+        """
+                Verify if the given web element is checked.
+
+                :param locator: The string pattern to find the element.
+                :param timeout: wait time before throwing any exception.
+                            If None, timeout is set to default timeout.
+                :return:True if the given web element is checked otherwise returns False.
+                """
+
+        return Verify(self.context).is_element_selected(locator, timeout)
+
+    def verify_element_clickable(self, locator, timeout=None):
+        """
+               Verify if the given element is clickable.
+               :param locator: The string pattern to find the element.
+               :param timeout: wait time before throwing any exception.
+                           If None, timeout is set to default timeout.
+               :return: True if the given element is clickable otherwise False.
+               """
+        return Verify(self.context).is_element_clickable(locator, timeout)
+
+    def verify_element_has_attribute(self, locator, attribute, timeout=None):
+        """
+                Verify if the web element has an attribute with the specified name.
+                :param locator: The string pattern or web element to find the element.
+                :param attribute: attribute name
+                :param timeout: wait time before throwing any exception.
+                            If None, timeout is set to default timeout.
+                :return: True if the web element has an attribute with the specified name otherwise False
+                """
+        return Verify(self.context).is_attribute_present(locator, attribute, timeout)
+
+    def verify_all_links_accessible_current_page(self):
+        """
+               Verify if all links (URLs) on the current page are accessible.
+               :return: True if all links (URLs) on the current page are accessible else False
+               """
+        return Verify(self.context).are_all_links_accessible()
+
+    def verify_element_text(self, locator, text, timeout=None):
+        """
+                Verify text of an element.
+
+                :param locator: web element or a locator string on which the action need to be performed.
+                :param text: expected text to match with element text
+                :param timeout: wait time before throwing any exception.
+                            If None, timeout is set to default timeout.
+                :return: True if text of an element matches else False
+                """
+        return Verify(self.context).element_text(locator, text, timeout)
+
+    def verify_options_present(self, locator, options, timeout=None):
+        """
+                Verify if all expected options are present within the given select object.
+                :param locator: web element or a locator string on which the action need to be performed.
+                :param options: List of expected dropdown options
+                :param timeout: wait time before throwing any exception.
+                            If None, timeout is set to default timeout.
+                :return: True if all the options match else False
+                """
+        return Verify(self.context).options_present(locator, options, timeout)
+
+    def switch_to_alert(self):
+        """
+        Switches focus to an alert displayed on current page
+        :return: Alert object
+        """
+        return BrowserWindow(self.context).switch_to_alert()
+
+    def switch_to_active_element(self):
+        """
+                Returns the element with focus, or BODY if nothing has focus.
+                """
+        return BrowserWindow(self.context).switch_to_active_element()
+
+    def switch_to_frame(self, frame_reference):
+        """
+               Switch the current context into an iframe using frame name or frame Id.
+
+               :param frame_reference:Frame name or Id
+               :return: None
+               """
+        BrowserWindow(self.context).switch_to_frame(frame_reference)
+
+    def switch_to_default_content(self):
+        """
+        Switch back to default window, after dealing with some framed elements
+        """
+        BrowserWindow(self.context).switch_to_default_content()
+
+    def get_alert_text(self):
+        """
+        Get displayed text of an alert popup (alert, confirmation popup, prompt popup)
+        :return: Text of an alert
+        """
+        return BrowserWindow(self.context).alert_get_text()
+
+    def alert_action(self, action):
+        """
+        Simulate users clicking on "OK"/"Cancel" button of an alert popup (alert, confirmation popup, prompt popup).
+
+        :param action: Action to perform on popup. Should be an instance of AlertActionType
+            Available values are
+            AlertActionType.ACCEPT, AlertActionType.DISMISS
+        :return: self
+        """
+        return BrowserWindow(self.context).alert_action(action)
+
+    def accept_alert(self):
+        """
+        Simulate users clicking on "OK" button of an alert popup (alert, confirmation popup, prompt popup).
+
+        :return: self
+        """
+        return BrowserWindow(self.context).alert_action(AlertActionType.ACCEPT)
+
+    def dismiss_alert(self):
+        """
+        Simulate users clicking on "Cancel" button of an alert popup (alert, confirmation popup, prompt popup).
+
+        :return: self
+        """
+        return BrowserWindow(self.context).alert_action(AlertActionType.DISMISS)
+
+    def set_alert_text(self, text):
+        """
+        Simulate users typing text into a prompt popup.
+
+        :param text: Text be entered into the prompt popup.
+        :return: self
+        """
+        return BrowserWindow(self.context).alert_send_keys(text)
