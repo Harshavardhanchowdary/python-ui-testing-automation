@@ -1,6 +1,7 @@
 selenium==3.141.0
 behave==1.2.6
 PyHamcrest==2.0.2
-allure-behave==2.8.22
+allure-behave==2.8.24
 python-interface==1.6.0
 webdriver_manager==3.2.2
+requests~=2.25.0

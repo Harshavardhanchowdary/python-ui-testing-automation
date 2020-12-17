@@ -23,7 +23,7 @@ class LogUtils:
         if not os.path.exists(self.log_dir):
             print(f"Trying to create a logs directory at: {self.log_dir}")
             os.makedirs(self.log_dir)
-            print(f"Directory {self.log_dir} Created ")
+            print(f"Directory {self.log_dir} Created")
         else:
             print(f"Directory {self.log_dir}  already exists")
 
