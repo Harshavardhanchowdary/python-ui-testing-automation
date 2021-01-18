@@ -1,0 +1,17 @@
+{
+    "project": "Lets-practice",
+    "default_url": "https://letskodeit.teachable.com/p/practice",
+    "browser_list": [
+        {
+            "browser": "chrome",
+            "device": "default"
+        }
+    ],
+    "project_to_run": "all",
+    "remote_server": "localhost",
+    "runner_instance": "local",
+    "auto_retry_failure": false,
+    "results": {
+        "local_results_folder": "/tmp/python-selenium-tests"
+    }
+}
