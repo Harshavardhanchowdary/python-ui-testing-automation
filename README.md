@@ -1,2 +1,2 @@
-# :: python-ui-testing-automation
+# Initial page
 
